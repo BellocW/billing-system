@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lukim Mi Contractors & Traders – Invoice & Quotation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 950px;
+            background: #fff;
+            padding: 20px;
+            margin: auto;
+            border-radius: 8px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            max-width: 110px;
+        }
+
+        .brand-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0b5fa5;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: #555;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-add {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .btn-save {
+            background: #17a2b8;
+            color: #fff;
+        }
+
+        .btn-print {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .btn-load {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .payment {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px dashed #ccc;
+            background: #fafafa;
+            font-size: 14px;
+        }
+
+        .history {
+            margin-top: 30px;
+            border-top: 2px solid #ddd;
+            padding-top: 15px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #555;
+        }
+
+        @media print {
+
+            .btn,
+            .history,
+            select,
+            input[type="checkbox"] {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="brand">
+                <img src="logo.png" class="logo" alt="Lukim Mi Logo">
+                <div>
+                    <div class="brand-name">Lukim Mi Contractors & Traders</div>
+                    <div class="tagline">Cleaning & Building Maintenance</div>
+                </div>
+            </div>
+            <div>
+                <select id="docType" onchange="changeType(this.value)">
+                    <option value="Invoice">Invoice</option>
+                    <option value="Quotation">Quotation</option>
+                </select>
+                <p><strong>No:</strong> <span id="docNo"></span></p>
+                <p><strong>Date:</strong> <input type="date" id="docDate"></p>
+            </div>
+        </div>
+
+        <h2 id="docTitle">Invoice</h2>
+
+        <!-- COMPANY -->
+        <h3>Company Details</h3>
+        <input id="companyAddress" placeholder="Address"
+            value="Port Moresby, National Capital District, Papua New Guinea">
+        <input id="companyContact" placeholder="Phone / Email" value="Proprietor: Belok Wosiyu">
+
+        <!-- CLIENT -->
+        <h3>Client Details</h3>
+        <input id="clientName" placeholder="Client Name">
+        <input id="clientAddress" placeholder="Client Address / Site Location">
+
+        <!-- ITEMS -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Price (K)</th>
+                    <th>Total (K)</th>
+                </tr>
+            </thead>
+            <tbody id="items">
+                <tr>
+                    <td><input placeholder="Item description (e.g., Structural Carpentry, Materials)"></td>
+                    <td><input type="number" oninput="calculate()" placeholder="0"></td>
+                    <td><input type="number" oninput="calculate()" placeholder="0.00"></td>
+                    <td class="lineTotal">0.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-add" onclick="addRow()">+ Add Item</button>
+
+        <!-- TOTALS -->
+        <div class="right">
+            <p>Subtotal: K <span id="subtotal">0.00</span></p>
+            <p><input type="checkbox" id="gst" onchange="calculate()"> Include GST (10%)</p>
+            <p><strong>Grand Total: K <span id="grandTotal">0.00</span></strong></p>
+        </div>
+
+        <!-- PAYMENT DETAILS -->
+        <div class="payment">
+            <h3>Payment Details & Project Conditions</h3>
+            <p><strong>Bank:</strong> NBC (National Banking Corporation) / Kina Bank</p>
+            <p><strong>Account Name:</strong> Lukim Mi Contractors & Traders</p>
+            <p><strong>Account Number:</strong> [Insert Corporate Account Number]</p>
+            <p><strong>Account Type:</strong> Corporate Cheque Account</p>
+            <p><strong>Terms:</strong> 50% mobilization deposit required for material procurement. Balance strictly due
+                immediately upon completion and client sign-off.</p>
+        </div>
+
+        <!-- ACTIONS -->
+        <button class="btn btn-save" onclick="saveInvoice()">💾 Save Document</button>
+        <button class="btn btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+
+        <!-- HISTORY -->
+        <div class="history">
+            <h3>📂 Document History</h3>
+            <select id="historyList"></select>
+            <button class="btn btn-load" onclick="loadInvoice()">Load Selected</button>
+        </div>
+
+        <div class="footer">
+            Lukim Mi Contractors & Traders | Structural Quality & Operational Reliability | Papua New Guinea
+        </div>
+
+    </div>
+
+    <script>
+        function addRow() {
+            document.getElementById("items").insertAdjacentHTML("beforeend", `
+    <tr>
+        <td><input placeholder="Item description"></td>
+        <td><input type="number" oninput="calculate()" placeholder="0"></td>
+        <td><input type="number" oninput="calculate()" placeholder="0.00"></td>
+        <td class="lineTotal">0.00</td>
+    </tr>`);
+        }
+
+        function calculate() {
+            let subtotal = 0;
+            document.querySelectorAll("#items tr").forEach(row => {
+                let qty = row.children[1].querySelector("input").value || 0;
+                let price = row.children[2].querySelector("input").value || 0;
+                let total = qty * price;
+                row.querySelector(".lineTotal").innerText = total.toFixed(2);
+                subtotal += total;
+            });
+            document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+            let gst = document.getElementById("gst").checked ? subtotal * 0.10 : 0;
+            document.getElementById("grandTotal").innerText = (subtotal + gst).toFixed(2);
+        }
+
+        function changeType(type) {
+            document.getElementById("docTitle").innerText = type;
+            generateNumber(type);
+        }
+
+        function generateNumber(type) {
+            let prefix = type === "Invoice" ? "INV" : "QT";
+            document.getElementById("docNo").innerText =
+                prefix + "-" + Math.floor(100000 + Math.random() * 900000);
+        }
+
+        function saveInvoice() {
+            let invoices = JSON.parse(localStorage.getItem("invoices") || "[]");
+            invoices.push({
+                no: document.getElementById("docNo").innerText,
+                type: document.getElementById("docType").value,
+                date: document.getElementById("docDate").value,
+                client: document.getElementById("clientName").value,
+                total: document.getElementById("grandTotal").innerText
+            });
+            localStorage.setItem("invoices", JSON.stringify(invoices));
+            loadHistory();
+            alert("Document saved successfully to history.");
+        }
+
+        function loadHistory() {
+            let list = document.getElementById("historyList");
+            list.innerHTML = "";
+            let invoices = JSON.parse(localStorage.getItem("invoices") || "[]");
+            invoices.forEach((inv, i) => {
+                let opt = document.createElement("option");
+                opt.value = i;
+                opt.text = `${inv.no} | ${inv.client} | K${inv.total}`;
+                list.add(opt);
+            });
+        }
+
+        function loadInvoice() {
+            let index = document.getElementById("historyList").value;
+            let invoices = JSON.parse(localStorage.getItem("invoices") || "[]");
+            let inv = invoices[index];
+            alert("Loaded Document Details:\n" + JSON.stringify(inv, null, 2));
+        }
+
+        document.getElementById("docDate").valueAsDate = new Date();
+        generateNumber("Invoice");
+        loadHistory();
+    </script>
+
+</body>
+
+</html>
