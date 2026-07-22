@@ -549,20 +549,22 @@
         }
 
         function addRow() {
-            var tbody = document.getElementById("itemsTable").getElementsByTagName('tbody');
-            var row = tbody.insertRow();
-            row.innerHTML = `
+  var tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+  var row = tbody.insertRow();
+  
+  // Injects the exact editable-box layout to match your styling engine perfectly
+  row.innerHTML = `
     <td class="left-align">
-      <input type="text" placeholder="Describe trades work..." oninput="syncText(this)">
-      <span class="print-text"></span>
+      <div class="editable-box" contenteditable="true" data-placeholder="Describe trades work..."></div>
     </td>
     <td><input type="number" class="qty-input" value="1" min="0" oninput="calculateRow(this)"></td>
     <td><input type="number" class="price-input" value="0.00" min="0" step="0.01" oninput="calculateRow(this)"></td>
     <td class="row-total">0.00</td>
-    <td><button class="btn-danger" onclick="deleteRow(this)">X</button></td>
+    <td><button class="btn btn-danger" style="padding: 4px 8px; margin: 0;" onclick="deleteRow(this)">X</button></td>
   `;
-            calculateGrandTotal();
-        }
+  
+  calculateGrandTotal();
+}
 
         function deleteRow(btn) {
             var row = btn.parentNode.parentNode;
