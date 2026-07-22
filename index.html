@@ -7,461 +7,564 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        /* --- GLOBAL & SCREEN STYLES --- */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #f2f2f2;
-            padding: 15px;
+            padding: 20px;
             margin: 0;
+            color: #333;
+            font-size: 13px;
+            line-height: 1.4;
         }
 
         .container {
             max-width: 850px;
             background: #fff;
             padding: 30px;
-            margin: auto;
+            margin: auto; /* Centering on screen change */
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
-        .header {
+        /* LETTERHEAD IMAGE LAYER */
+        .company-letterhead {
+            width: 100%;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            border-bottom: 2px solid #0b5fa5;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .brand {
-            display: flex;
+            justify-content: flex-start;
             align-items: center;
-            gap: 15px;
+            margin-bottom: 15px;
         }
 
-        .logo {
-            max-width: 100px;
+        .company-letterhead img {
+            max-width: 300px;
             height: auto;
+            display: block;
         }
 
-        .brand-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #0b5fa5;
+        /* HEADER SECTION WITH CONTROLS */
+        .letterhead-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            margin-bottom: 25px;
         }
 
-        .tagline {
-            font-size: 13px;
-            color: #555;
-            font-style: italic;
-            margin-top: 3px;
-        }
-
-        .meta-box {
+        .meta-control-panel {
+            width: 300px;
             text-align: right;
         }
 
-        .meta-box p {
-            margin: 4px 0;
+        /* CLEAR, LARGE TITLE AT TOP CENTER */
+        h1#docTitle {
+            text-align: center;
+            color: #0b5fa5;
+            margin: 0 0 20px 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
+            font-weight: bold;
         }
 
-        input,
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+        /* PROMINENT DOCUMENT ID CARD BOX ON TOP RIGHT */
+        .document-id-card {
+            background-color: #f8f9fa;
+            border: 2px solid #0b5fa5;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin-top: -5px;
+        }
+
+        .document-id-card p {
+            margin: 4px 0;
+            font-size: 13px;
+            color: #0b5fa5;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* FORM INPUTS within the box */
+        .document-id-card input {
+            width: auto;
+            padding: 4px 8px;
+            margin-bottom: 0;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
+            font-size: 13px;
+            font-family: inherit;
+            font-weight: bold;
+            color: #333;
+            text-align: right;
+            background-color: #fff;
+        }
+
+        .document-id-card input[type="date"] {
+            width: 140px;
+        }
+
+        /* Select styling for prominent look */
+        #docType {
+            width: 100%;
+            padding: 6px 12px;
+            margin-bottom: 10px;
+            border: 2px solid #0b5fa5;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #0b5fa5;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        /* Other standard form inputs */
+        input:not(.document-id-card input), select:not(#docType), textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
             font-family: inherit;
         }
 
-        /* GLOBAL EDITABLE BOX PARAMETERS */
-        .editable-box {
-            width: 100%;
-            min-height: 38px;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: none;
-            /* Hides the block box in client details view */
-            background: transparent;
-            /* Removes background fills */
-            box-sizing: border-box;
-            font-size: 14px;
-            white-space: pre-wrap;
-            /* Wraps content text layout smoothly */
-            word-break: break-word;
-            /* Prevents overflow lines */
+        textarea {
+            resize: vertical;
+            min-height: 60px;
         }
 
-        .editable-box:focus {
-            outline: none;
-            /* Removes bright blue selection rings */
+        /* CLIENT DETAILS SECTION STYLING */
+        .client-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        /* FIXED TABLE WIDTH METRICS */
+        .client-details-grid .field-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .client-details-grid label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 4px;
+        }
+
+        .client-details-grid input, .client-details-grid textarea {
+            margin-bottom: 0;
+        }
+
+        /* TABLES (Unified look change) */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             table-layout: fixed;
-            /* Forces strict column width metrics */
+            border: 1px solid #ddd;
         }
 
-        /* SPECIFIC COLUMN WIDTH CONTROL */
-        th:nth-child(1) {
-            width: 65%;
-        }
-
-        /* Maximum room for Trades Description */
-        th:nth-child(2) {
-            width: 10%;
-        }
-
-        /* Compact Qty */
-        th:nth-child(3) {
-            width: 12%;
-        }
-
-        /* Unit Price */
-        th:nth-child(4) {
-            width: 13%;
-        }
-
-        /* Total Column */
+        /* Specific fixed column widths (Optimized for Description) */
+        th:nth-child(1) { width: 62%; } 
+        th:nth-child(2) { width: 9%; } 
+        th:nth-child(3) { width: 12%; } 
+        th:nth-child(4) { width: 12%; } 
+        th:nth-child(5) { width: 5%; } 
 
         th {
             background-color: #f8f9fa;
-            color: #333;
+            color: #0b5fa5;
             font-weight: bold;
             border: 1px solid #ddd;
             padding: 10px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 6px;
             text-align: center;
-            vertical-align: top;
-            word-wrap: break-word;
-            white-space: normal;
-            overflow: visible !important;
-            /* Prevents cell blocks from masking dynamic text length */
+            vertical-align: middle;
+            font-size: 13px;
+            color: #333;
         }
 
-        td .editable-box {
-            border: 1px solid transparent;
-            background: transparent;
-            margin-bottom: 0;
-            padding: 4px;
-            text-align: left;
-            min-height: 24px;
-            width: 100%;
-            display: block;
-            white-space: pre-wrap !important;
-            word-break: break-word !important;
-            overflow: visible !important;
-            height: auto !important;
-        }
-
+        /* Styling inside input cells */
         td input {
             margin-bottom: 0;
             border: 1px solid transparent;
             background: transparent;
             text-align: inherit;
+            padding: 4px;
             width: 100%;
-        }
-
-        td input:focus {
-            border-color: #0b5fa5;
-            background: #fff;
+            color: inherit;
         }
 
         .left-align {
             text-align: left;
         }
 
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
         h3 {
             color: #0b5fa5;
-            font-size: 16px;
+            font-size: 15px;
             border-bottom: 1px solid #ddd;
             padding-bottom: 5px;
-            margin-top: 20px;
+            margin-top: 25px;
             margin-bottom: 10px;
+            font-weight: bold;
         }
 
+        /* BUTTONS */
         .btn {
-            padding: 10px 20px;
-            margin-top: 10px;
+            padding: 8px 16px;
+            margin-top: 5px;
             margin-right: 5px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             transition: background 0.2s;
         }
 
-        .btn-add {
-            background: #28a745;
-            color: #fff;
+        /* TOTALS SUMMARY SECTION */
+        .summary-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            gap: 20px;
         }
 
-        .btn-add:hover {
-            background: #218838;
+        .summary-box {
+            width: 300px;
+            border: 2px solid #0b5fa5;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            padding: 10px 15px;
         }
 
-        .btn-save {
-            background: #17a2b8;
-            color: #fff;
-        }
-
-        .btn-save:hover {
-            background: #138496;
-        }
-
-        .btn-print {
-            background: #007bff;
-            color: #fff;
-        }
-
-        .btn-print:hover {
-            background: #0069d9;
-        }
-
-        .btn-load {
-            background: #6c757d;
-            color: #fff;
-        }
-
-        .right {
-            text-align: right;
-            margin-top: 15px;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        .right p {
+        .summary-box p {
             margin: 5px 0;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #333;
         }
 
+        .summary-total-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0b5fa5;
+        }
+
+        /* REMITTANCE */
         .payment {
-            margin-top: 20px;
+            margin-top: 30px;
             padding: 15px;
             border: 1px dashed #0b5fa5;
             background: #fafafa;
             font-size: 13px;
             line-height: 1.5;
             border-radius: 4px;
+            color: #333;
         }
 
-        .payment h3 {
-            margin-top: 0;
+        .payment h4 {
+            margin: 0 0 10px 0;
+            color: #0b5fa5;
+            font-size: 14px;
+            font-weight: bold;
         }
 
+        .payment p {
+            margin: 4px 0;
+        }
+
+        /*Logged history drafts */
         .history {
-            margin-top: 30px;
+            margin-top: 35px;
             border-top: 2px solid #ddd;
-            padding-top: 15px;
+            padding-top: 20px;
         }
 
+        /* FOOTER LAYER */
         .footer {
-            margin-top: 25px;
+            margin-top: 30px;
             text-align: center;
-            font-size: 11px;
-            color: #777;
+            font-size: 12px;
+            color: #666;
             border-top: 1px solid #eee;
-            padding-top: 10px;
+            padding-top: 15px;
+            line-height: 1.5;
         }
 
-        .print-text {
-            display: none;
-        }
-
-        /* HIGH-ACCURACY PHYSICAL LAYOUT ENGINE */
+        /* --- HIGH-EFFICIENCY PRINT LAYOUT ENGINE --- */
+        /* Better Layout for Printing changechange applied below */
         @media print {
+            /* 1. PAPER SPECIFICS */
+            @page {
+                size: letter portrait; /* Unified template structure */
+                margin: 1.2cm 1.5cm; /* Re-optimized margins to prevent cutoff */
+            }
+
+            /* 2. BODY RESET */
             body {
                 background: #fff;
-                padding: 0;
+                padding: 0 !important;
+                margin: 0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-size: 11px !important;
+                color: #000 !important;
+                width: auto; /* Allow auto scaling */
             }
 
+            /* 3. CONTAINER RESET */
             .container {
-                max-width: 100%;
-                padding: 0;
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
                 box-shadow: none;
                 border-radius: 0;
+                margin: 0 !important; /* Force to full width of printable area */
+                border: none !important; /* Ensure no screen-specific borders */
             }
 
-            .btn,
+            /* 4. LAYOUT MODIFICATIONS (Hiding Controls) */
+            .actions-bar,
             .history,
-            select,
+            #docType,
             .btn-danger,
-            th:last-child,
-            td:last-child {
+            th:last-child, /* Action header */
+            td:last-child { /* Action cell */
                 display: none !important;
             }
 
-            input,
-            textarea,
-            .editable-box,
-            td .editable-box {
+            /* 5. HEADER Consolidated Spacing */
+            .company-letterhead { 
+                margin-bottom: 5px !important; 
+                justify-content: flex-start !important; /* Ensure left-aligned on paper */
+            }
+            .letterhead-header {
+                height: 40px;
+                margin-bottom: 5px !important;
+                justify-content: flex-end !important; /* Ensure doc info on right paper edge */
+            }
+            .meta-control-panel { 
+                margin-top: -30px; 
+            }
+            .document-id-card p { font-size: 11px !important; }
+            .document-id-card input { font-size: 11px !important; }
+
+            /* 6. TYPOGRAPHY SCALING FOR PRINT */
+            h1#docTitle {
+                font-size: 20px !important;
+                margin: 5px 0 10px 0 !important;
+            }
+
+            h3 {
+                font-size: 13px !important;
+                margin: 10px 0 3px 0 !important;
+            }
+
+            /* 7. CLIENT DETAILS Print Spacing adjustments */
+            .client-details-grid {
+                margin-bottom: 10px !important;
+                gap: 5px !important;
+            }
+            .client-details-grid label { font-size: 11px !important; }
+            .client-details-grid textarea { min-height: 40px !important; }
+
+            /* 8. FORM ELEMENTS Print Scaling */
+            input:not(.document-id-card input),
+            select:not(#docType),
+            textarea {
+                font-size: 11px !important;
+            }
+
+            /* Hide borders on template boxes */
+            input[readonly], textarea#clientAddress, textarea#specialInstructions {
+                background: transparent !important;
                 border: none !important;
-                background: transparent !important;
-                padding: 0 !important;
-                margin-bottom: 0 !important;
-                font-size: 14px !important;
                 color: #000 !important;
-                appearance: none;
-                -webkit-appearance: none;
-                white-space: pre-wrap !important;
-                /* Forces descriptions to break cleanly into new rows */
-                word-break: break-word !important;
-                /* Prevents single massive strings from spilling sideways */
-                overflow: visible !important;
-                /* Removes clipping bounds */
-                height: auto !important;
-                /* Enables cell block heights to scale with values */
-                display: block !important;
-                width: 100% !important;
             }
 
-            td input {
-                display: block !important;
-                text-align: inherit !important;
-                width: 100% !important;
+            /* 9. TABLE TIGHTENING */
+            table { 
+                margin: 8px 0 !important; 
+                border-collapse: collapse !important; 
+                border: 1px solid #ccc !important; 
+                width: 100% !important; 
             }
+            th { font-size: 11px !important; padding: 5px !important; border: 1px solid #ccc !important;}
+            td { font-size: 11px !important; padding: 3px 5px !important; border: 1px solid #ccc !important;}
+            td input { font-size: 11px !important; }
 
-            th {
-                background-color: #f2f2f2 !important;
-                color: #333 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+            /* Unified column widths for print template change */
+            th:nth-child(1) { width: 55%; } /* Max space description */
+            th:nth-child(2) { width: 10%; } 
+            th:nth-child(3) { width: 15%; }
+            th:nth-child(4) { width: 15%; }
+
+            /* 10. SUMMARY SECTION Spacing change */
+            .summary-container { 
+                margin-top: 10px !important; 
+                gap: 10px !important; 
+                page-break-inside: avoid; /* Better template change - prevent splitting box */
             }
+            #specialInstructions { font-size: 10px !important; min-height: 50px !important; }
+            .summary-box { width: 220px !important; padding: 5px 10px !important; border: none !important;}
+            .summary-box p { font-size: 11px !important; }
+            .summary-total-value { font-size: 14px !important; }
 
+            /* 11. REMITTANCE Compact change */
             .payment {
-                background: transparent !important;
-                page-break-inside: avoid;
-                margin-top: 15px;
-                padding: 10px;
+                margin-top: 15px !important;
+                font-size: 11px !important;
+                padding: 8px !important;
+                page-break-inside: avoid; /* Better template change - prevent splitting box */
             }
+            .payment h4 { font-size: 12px !important; }
 
-            @page {
-                size: auto;
-                margin: 0;
-                /* Hides raw browser URL links automatically */
-            }
-
-            body {
-                padding: 1.5cm !important;
-                /* Safely cushions content items from paper margins */
+            /* 12. FOOTER Spacing change */
+            .footer {
+                margin-top: 10px !important;
+                font-size: 10px !important;
             }
         }
     </style>
-
-
 </head>
 
 <body>
 
     <div class="container">
 
-        <!-- MODERN CLEAN CORPORATE LETTERHEAD HEADER -->
-        <div class="letterhead-header">
-            <div class="brand-group">
-                <div class="brand-logo-box">
-                    <img src="logo.png" class="logo-house-graphic" alt="Lukim Mi Logo"
-                        onerror="this.style.display='none'">
-                </div>
-                <div class="brand-text-details">
-                    <div class="main-company-title"></div>
-                    <div class="main-company-subtitle"></div>
-                </div>
-            </div>
+        <!-- COMPANY LETTERHEAD IMAGE LAYER -->
+        <div class="company-letterhead">
+            <img src="logo.png" alt="Lukim Mi Contractors & Traders / Property Maintenance Services Company Letterhead">
+        </div>
 
+        <!-- CORPORATE HEADER & CONTROLS -->
+        <div class="letterhead-header">
             <div class="meta-box meta-control-panel">
                 <select id="docType" onchange="changeType(this.value)">
                     <option value="Invoice">Invoice</option>
                     <option value="Quotation">Quotation</option>
                 </select>
+                <!-- Prominent, easy-to-read box for document details -->
                 <div class="document-id-card">
-                    <p style="margin: 2px 0;"><strong>Document No:</strong> <input type="text" id="docNo"
-                            style="width: 100px; display: inline-block; margin-bottom: 0; padding: 4px; font-weight: bold;">
+                    <p><strong>Document No:</strong> 
+                        <input type="text" id="docNo" style="font-weight: bold;">
                     </p>
-                    <p style="margin: 2px 0; display: flex; align-items: center; justify-content: flex-end; gap: 5px;">
-                        <strong>Date:</strong>
-                        <input type="date" id="docDate" style="width: 130px; margin-bottom: 0; padding: 4px;">
+                    <p><strong>Date:</strong>
+                        <input type="date" id="docDate" style="font-weight: bold;">
                     </p>
                 </div>
             </div>
         </div>
 
-        <h2 id="docTitle">Invoice</h2>
+        <!-- CLEAR, LARGE TITLE AT TOP CENTER -->
+        <h1 id="docTitle">Invoice</h1>
 
-        <!-- COMPANY -->
+        <!-- COMPANY DETAILS SECTION -->
         <h3>Company Details</h3>
-        <input id="companyAddress" value="Naurehara Street, Talai Settlement, Badili, Ward 2, NCD, Port Moresby"
-            readonly style="background: #fafafa; font-weight: bold; color: #555;">
-        <input id="companyContact" value="Proprietor: Belok Wosiyu | Ph: 73745735 | Email: wosiyub@gmail.com" readonly
-            style="background: #fafafa; font-weight: bold; color: #555;">
+        <input id="companyAddress" value="Naurehara Street, Talai Settlement, Badili, Ward 2, NCD, Port Moresby" readonly style="background: #fafafa; font-weight: bold; color: #555;">
+        <input id="companyContact" value="Proprietor: Belok Wosiyu | Ph: 73745735 | Email: wosiyub@gmail.com" readonly style="background: #fafafa; font-weight: bold; color: #555;">
 
         <!-- CLIENT & WORK SPECIFICATION SECTION -->
-        <div class="row">
-            <div class="col">
-                <h3>Client Details</h3>
-                <input id="clientName" placeholder="Client Name or Company">
+        <h3>Bill To (Client Details)</h3>
+        
+        <div class="client-details-grid">
+            <div class="field-group">
+                <label for="clientName">Contact Person / Dept.</label>
+                <input type="text" id="clientName" placeholder="Client Name or Department">
+            </div>
+            
+            <div class="field-group">
+                <label for="clientCompany">Company Name</label>
+                <input type="text" id="clientCompany" placeholder="Company Name">
+            </div>
+            
+            <div class="field-group">
+                <label for="clientAddress">Billing Address / Site Location</label>
                 <textarea id="clientAddress" placeholder="Client Billing Address / Site Project Location"></textarea>
+            </div>
+            
+            <div class="field-group">
+                <label for="clientPhone">Phone Number</label>
+                <input type="tel" id="clientPhone" placeholder="Client Phone">
+            </div>
+            
+            <div class="field-group">
+                <label for="clientEmail">Email Address</label>
+                <input type="email" id="clientEmail" placeholder="Client Email">
             </div>
         </div>
 
+
+        <!-- STANDARDIZED TABLES -->
         <h3>Work & Material Specification</h3>
         <table id="itemsTable">
             <thead>
                 <tr>
-                    <th style="width: 50%;">Description of Maintenance Trades</th>
-                    <th style="width: 12%;">Qty</th>
-                    <th style="width: 18%;">Unit Price (K)</th>
-                    <th style="width: 15%;">Total (K)</th>
-                    <th style="width: 5%;">Action</th>
+                    <th>Description of Maintenance Trades</th>
+                    <th>Qty</th>
+                    <th>Unit Price (K)</th>
+                    <th>Total (K)</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="left-align">
-                        <input type="text" value="General building repairs and property maintenance"
-                            oninput="syncText(this)">
-                        <span class="print-text td-print-left">General building repairs and property maintenance</span>
+                        <input type="text" value="General building repairs and property maintenance">
                     </td>
                     <td><input type="number" class="qty-input" value="1" min="0" oninput="calculateRow(this)"></td>
-                    <td><input type="number" class="price-input" value="0.00" min="0" step="0.01"
-                            oninput="calculateRow(this)"></td>
+                    <td><input type="number" class="price-input" value="0.00" min="0" step="0.01" oninput="calculateRow(this)"></td>
                     <td class="row-total">0.00</td>
                     <td><button class="btn-danger" onclick="deleteRow(this)">X</button></td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- ACTIONS BAR & TOTALS DISPLAY -->
+        <!-- ACTIONS BAR -->
         <div class="actions-bar">
             <button class="btn btn-add" onclick="addRow()">+ Add Line Item</button>
             <button class="btn btn-save" onclick="saveDocument()">Save Draft</button>
             <button class="btn btn-print" onclick="window.print()">Print / Save PDF</button>
         </div>
 
-        <div class="right">
-            <p>Subtotal: K <span id="subtotal">0.00</span></p>
-            <p>GST (0%): K <span id="gst">0.00</span></p>
-            <p class="summary-total">Total Amount: K <span id="grandTotal">0.00</span></p>
+        <!-- IMPROVED SUMMARY SECTION -->
+        <div class="summary-container">
+            <!-- Special Instructions Box -->
+            <div class="instructions-box field-group">
+                <label for="specialInstructions">Special Instructions / Project Notes</label>
+                <textarea id="specialInstructions" placeholder="Insert any additional comments or instructions here..."></textarea>
+            </div>
+
+            <!-- Dedicated Totals Summary Box -->
+            <div class="summary-box">
+                <p><strong>Subtotal (K):</strong> K <span id="subtotal">0.00</span></p>
+                <p><strong>GST (0%) (K):</strong> K <span id="gst">0.00</span></p>
+                <p style="border-top: 1px solid #ddd; padding-top: 5px;">
+                    <span style="font-weight: bold; color: #0b5fa5; text-transform: uppercase;">Total Amount (K):</span>
+                    <span class="summary-total-value">K <span id="grandTotal">0.00</span></span>
+                </p>
+            </div>
         </div>
 
         <!-- REMITTANCE DETAILS -->
@@ -471,8 +574,7 @@
             <p><strong>Bank Name:</strong> National Banking Corporation Limited</p>
             <p><strong>Account Name:</strong> LUKIM MI PROPERTY MAINTENANCE SERVICES</p>
             <p><strong>Account Number:</strong> [Insert Account Number once finalized at Bank]</p>
-            <p style="margin-top: 5px; font-style: italic; color:#666;">Note: Please cite the Invoice or Quotation
-                Number listed above as your transaction payment description marker.</p>
+            <p style="margin-top: 5px; font-style: italic; color:#444;">Note: Please cite the Invoice or Quotation Number listed above as your transaction payment description marker.</p>
         </div>
 
         <!-- LOGGED HISTORY DRAFTS -->
@@ -481,15 +583,15 @@
             <table id="historyTable">
                 <thead>
                     <tr>
-                        <th>Doc Type</th>
-                        <th>Doc No</th>
-                        <th>Client</th>
-                        <th>Total Amount</th>
-                        <th>Action</th>
+                        <th style="width: 15%;">Doc Type</th>
+                        <th style="width: 20%;">Doc No</th>
+                        <th style="width: 35%;">Client</th>
+                        <th style="width: 20%;">Total Amount</th>
+                        <th style="width: 10%;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Injected via client JavaScript engine -->
+                    <!-- Injected via JS -->
                 </tbody>
             </table>
         </div>
@@ -498,17 +600,15 @@
         <div class="footer">
             Lukim Mi Property Maintenance Services &copy; 2026<br>
             "Your Trusted Property Maintenance Partner – Serving Badili and NCD Provinces"<br>
-            <span style="font-size:9px; color:#aaa;">Generated via Lukim Mi Core ERP System V1.0</span>
+            <span style="font-size:10px; color:#999;">Generated via Lukim Mi Core ERP System V1.0</span>
         </div>
 
-    </div> <!-- Close .container wrapper cleanly -->
+    </div>
 
     <script>
         document.getElementById('docDate').valueAsDate = new Date();
 
-        // ==========================================
-        // 1. PASTE THE AUTO-NUMBER GENERATOR HERE:
-        // ==========================================
+        // Unique document sequence generator based on Local Storage History
         function generateNextNumber(type) {
             var history = JSON.parse(localStorage.getItem("lukim_mi_history")) || [];
             var prefix = (type === "Invoice") ? "INV-" : "QT-";
@@ -524,55 +624,47 @@
             });
 
             var nextNum = maxNum + 1;
-            var stringNum = nextNum.toString();
-            while (stringNum.length < 3) {
-                stringNum = "0" + stringNum;
-            }
+            var stringNum = nextNum.toString().padStart(3, '0');
             return prefix + stringNum;
         }
 
-        // ==========================================
-        // 2. REPLACE YOUR EXISTING changeType FUNCTION:
-        // ==========================================
+        // Handle document type selection change
         function changeType(val) {
+            // Update prominent large title
             document.getElementById('docTitle').innerText = val;
             document.title = "Lukim Mi Services - " + val;
-            document.getElementById("docNo").value = generateNextNumber(val); // <-- Added this line
+            // Generate number based on prominent look requirement
+            document.getElementById("docNo").value = generateNextNumber(val);
         }
 
-        function syncText(element) {
-            if (element.tagName === "TEXTAREA") {
-                document.getElementById("clientAddressPrint").innerText = element.value;
-            } else if (element.nextElementSibling) {
-                element.nextElementSibling.innerText = element.value;
-            }
+        // Injects a new blank line item into the table
+        function addRow(description = "", qty = 1, price = 0.00) {
+            var tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+            var row = tbody.insertRow();
+            
+            row.innerHTML = `
+                <td class="left-align">
+                    <input type="text" value="${description}" placeholder="Describe trades work...">
+                </td>
+                <td><input type="number" class="qty-input" value="${qty}" min="0" oninput="calculateRow(this)"></td>
+                <td><input type="number" class="price-input" value="${parseFloat(price).toFixed(2)}" min="0" step="0.01" oninput="calculateRow(this)"></td>
+                <td class="row-total">0.00</td>
+                <td><button class="btn-danger" onclick="deleteRow(this)">X</button></td>
+            `;
+            
+            calculateRow(row.querySelector('.qty-input')); // Trigger initial calculation for new row
         }
 
-        function addRow() {
-  var tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
-  var row = tbody.insertRow();
-  
-  // Injects the exact editable-box layout to match your styling engine perfectly
-  row.innerHTML = `
-    <td class="left-align">
-      <div class="editable-box" contenteditable="true" data-placeholder="Describe trades work..."></div>
-    </td>
-    <td><input type="number" class="qty-input" value="1" min="0" oninput="calculateRow(this)"></td>
-    <td><input type="number" class="price-input" value="0.00" min="0" step="0.01" oninput="calculateRow(this)"></td>
-    <td class="row-total">0.00</td>
-    <td><button class="btn btn-danger" style="padding: 4px 8px; margin: 0;" onclick="deleteRow(this)">X</button></td>
-  `;
-  
-  calculateGrandTotal();
-}
-
+        // Deletes a specific line item row
         function deleteRow(btn) {
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
             calculateGrandTotal();
         }
 
+        // Recalculates total for a single row based on Qty/Price input
         function calculateRow(input) {
+            if(!input) return; // Guard against initial addRow call
             var row = input.parentNode.parentNode;
             var qty = parseFloat(row.querySelector('.qty-input').value) || 0;
             var price = parseFloat(row.querySelector('.price-input').value) || 0;
@@ -581,6 +673,7 @@
             calculateGrandTotal();
         }
 
+        // Updates main subtotal and grand total based on all row totals
         function calculateGrandTotal() {
             var rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].getElementsByTagName('tr');
             var subtotal = 0;
@@ -594,28 +687,54 @@
             document.getElementById("grandTotal").innerText = subtotal.toFixed(2);
         }
 
-        // ==========================================
-        // 3. REPLACE YOUR EXISTING saveDocument FUNCTION:
-        // ==========================================
+        // Save current document data into Local Storage history log
         function saveDocument() {
             var docType = document.getElementById("docType").value;
             var docNo = document.getElementById("docNo").value;
             var clientName = document.getElementById("clientName").value || "Unknown Client";
+            var clientCompany = document.getElementById("clientCompany").value || "";
+            var clientAddress = document.getElementById("clientAddress").value || "";
+            var clientPhone = document.getElementById("clientPhone").value || "";
+            var clientEmail = document.getElementById("clientEmail").value || "";
             var grandTotal = document.getElementById("grandTotal").innerText;
+            var instructions = document.getElementById("specialInstructions").value || "";
 
-            var record = { type: docType, number: docNo, client: clientName, total: grandTotal };
+            // Extract all line item data
+            var items = [];
+            var rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+                var desc = rows[i].querySelector('input[type="text"]').value;
+                var qty = rows[i].querySelector('.qty-input').value;
+                var price = rows[i].querySelector('.price-input').value;
+                items.push({ desc: desc, qty: qty, price: price });
+            }
+
+            // Define the complete record object
+            var record = { 
+                type: docType, 
+                number: docNo, 
+                client: clientName, 
+                clientCompany: clientCompany,
+                address: clientAddress,
+                clientPhone: clientPhone,
+                clientEmail: clientEmail,
+                total: grandTotal,
+                instructions: instructions,
+                items: items 
+            };
+
+            // Pull history, merge/replace record, and save back to storage
             var history = JSON.parse(localStorage.getItem("lukim_mi_history")) || [];
-            history = history.filter(item => item.number !== docNo);
+            history = history.filter(item => item.number !== docNo); // Replace old version if exists
             history.push(record);
             localStorage.setItem("lukim_mi_history", JSON.stringify(history));
 
             alert("Document " + docNo + " saved safely.");
-            loadHistory();
-
-            // Ready the text block with the next serial sequence
-            document.getElementById("docNo").value = generateNextNumber(docType); // <-- Added this line
+            loadHistory(); // Refresh history log display
+            document.getElementById("docNo").value = generateNextNumber(docType); // Ready next number
         }
 
+        // Injects saved document log records into the history table
         function loadHistory() {
             var history = JSON.parse(localStorage.getItem("lukim_mi_history")) || [];
             var tbody = document.getElementById("historyTable").getElementsByTagName('tbody')[0];
@@ -624,18 +743,20 @@
                 tbody.innerHTML = '<tr><td colspan="5" style="color:#aaa; font-style:italic;">No saved records located in storage.</td></tr>';
                 return;
             }
-            history.forEach(function (item) {
+            // Loop in reverse to show newest on top
+            history.reverse().forEach(function (item) {
                 var row = tbody.insertRow();
                 row.innerHTML = `
-      <td>${item.type}</td>
-      <td><strong>${item.number}</strong></td>
-      <td>${item.client}</td>
-      <td>K ${item.total}</td>
-      <td><button class="btn btn-load" style="padding:2px 8px; font-size:11px;" onclick="loadDocumentKey('${item.number}')">Open</button></td>
-    `;
+                    <td>${item.type}</td>
+                    <td><strong>${item.number}</strong></td>
+                    <td>${item.client}</td>
+                    <td>K ${item.total}</td>
+                    <td><button class="btn btn-load" style="padding:2px 8px; font-size:11px;" onclick="loadDocumentKey('${item.number}')">Open</button></td>
+                `;
             });
         }
 
+        // Hydrates the main form with data from a specific saved record
         function loadDocumentKey(key) {
             var history = JSON.parse(localStorage.getItem("lukim_mi_history")) || [];
             var item = history.find(i => i.number === key);
@@ -643,17 +764,30 @@
                 document.getElementById("docType").value = item.type;
                 document.getElementById('docTitle').innerText = item.type;
                 document.getElementById("docNo").value = item.number;
-                document.getElementById("clientName").value = item.client;
+                document.getElementById("clientName").value = item.client || "";
+                document.getElementById("clientCompany").value = item.clientCompany || "";
+                document.getElementById("clientAddress").value = item.address || "";
+                document.getElementById("clientPhone").value = item.clientPhone || "";
+                document.getElementById("clientEmail").value = item.clientEmail || "";
+                
+                document.getElementById("specialInstructions").value = item.instructions || "";
+
+                // Re-inject items table rows
+                var tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+                tbody.innerHTML = "";
+                if (item.items && item.items.length > 0) {
+                    item.items.forEach(it => addRow(it.desc, it.qty, it.price));
+                } else {
+                    addRow(); // Default blank row if no items
+                }
             }
         }
 
-        // ==========================================
-        // 4. REPLACE THE INITIAL RUNTIME RUN AT THE BOTTOM:
-        // ==========================================
-        calculateGrandTotal();
-        loadHistory();
-        // Set the initial document number on page load
-        document.getElementById("docNo").value = generateNextNumber(document.getElementById("docType").value); // <-- Added this line
+        // INITIAL RUNTIME ON PAGE LOAD
+        calculateGrandTotal(); // Trigger initial calculation for default row
+        loadHistory(); // Load saved document log
+        // Set initial document number based on default DocType Prominent look requirement
+        document.getElementById("docNo").value = generateNextNumber(document.getElementById("docType").value);
     </script>
 
 </body>
