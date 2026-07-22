@@ -11,34 +11,40 @@
             font-family: Arial, sans-serif;
             background: #f2f2f2;
             padding: 15px;
+            margin: 0;
         }
 
         .container {
-            max-width: 950px;
+            max-width: 850px;
             background: #fff;
-            padding: 20px;
+            padding: 30px;
             margin: auto;
             border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            border-bottom: 2px solid #0b5fa5;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .logo {
-            max-width: 110px;
+            max-width: 100px;
+            height: auto;
         }
 
         .brand-name {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             color: #0b5fa5;
         }
@@ -46,38 +52,165 @@
         .tagline {
             font-size: 13px;
             color: #555;
+            font-style: italic;
+            margin-top: 3px;
+        }
+
+        .meta-box {
+            text-align: right;
+        }
+
+        .meta-box p {
+            margin: 4px 0;
         }
 
         input,
         select {
             width: 100%;
-            padding: 6px;
-            margin-bottom: 8px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            font-family: inherit;
         }
 
+        /* GLOBAL EDITABLE BOX PARAMETERS */
+        .editable-box {
+            width: 100%;
+            min-height: 38px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: none;
+            /* Hides the block box in client details view */
+            background: transparent;
+            /* Removes background fills */
+            box-sizing: border-box;
+            font-size: 14px;
+            white-space: pre-wrap;
+            /* Wraps content text layout smoothly */
+            word-break: break-word;
+            /* Prevents overflow lines */
+        }
+
+        .editable-box:focus {
+            outline: none;
+            /* Removes bright blue selection rings */
+        }
+
+        /* FIXED TABLE WIDTH METRICS */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            table-layout: fixed;
+            /* Forces strict column width metrics */
         }
 
-        th,
+        /* SPECIFIC COLUMN WIDTH CONTROL */
+        th:nth-child(1) {
+            width: 65%;
+        }
+
+        /* Maximum room for Trades Description */
+        th:nth-child(2) {
+            width: 10%;
+        }
+
+        /* Compact Qty */
+        th:nth-child(3) {
+            width: 12%;
+        }
+
+        /* Unit Price */
+        th:nth-child(4) {
+            width: 13%;
+        }
+
+        /* Total Column */
+
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
         td {
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
+            vertical-align: top;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow: visible !important;
+            /* Prevents cell blocks from masking dynamic text length */
+        }
+
+        td .editable-box {
+            border: 1px solid transparent;
+            background: transparent;
+            margin-bottom: 0;
+            padding: 4px;
+            text-align: left;
+            min-height: 24px;
+            width: 100%;
+            display: block;
+            white-space: pre-wrap !important;
+            word-break: break-word !important;
+            overflow: visible !important;
+            height: auto !important;
+        }
+
+        td input {
+            margin-bottom: 0;
+            border: 1px solid transparent;
+            background: transparent;
+            text-align: inherit;
+            width: 100%;
+        }
+
+        td input:focus {
+            border-color: #0b5fa5;
+            background: #fff;
+        }
+
+        .left-align {
+            text-align: left;
         }
 
         h2 {
             text-align: center;
+            color: #333;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: #0b5fa5;
+            font-size: 16px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
         .btn {
-            padding: 10px 15px;
+            padding: 10px 20px;
             margin-top: 10px;
+            margin-right: 5px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.2s;
         }
 
         .btn-add {
@@ -85,14 +218,26 @@
             color: #fff;
         }
 
+        .btn-add:hover {
+            background: #218838;
+        }
+
         .btn-save {
             background: #17a2b8;
             color: #fff;
         }
 
+        .btn-save:hover {
+            background: #138496;
+        }
+
         .btn-print {
             background: #007bff;
             color: #fff;
+        }
+
+        .btn-print:hover {
+            background: #0069d9;
         }
 
         .btn-load {
@@ -102,14 +247,27 @@
 
         .right {
             text-align: right;
+            margin-top: 15px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .right p {
+            margin: 5px 0;
         }
 
         .payment {
-            margin-top: 25px;
+            margin-top: 20px;
             padding: 15px;
-            border: 1px dashed #ccc;
+            border: 1px dashed #0b5fa5;
             background: #fafafa;
-            font-size: 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            border-radius: 4px;
+        }
+
+        .payment h3 {
+            margin-top: 0;
         }
 
         .history {
@@ -119,44 +277,132 @@
         }
 
         .footer {
-            margin-top: 20px;
+            margin-top: 25px;
             text-align: center;
-            font-size: 12px;
-            color: #555;
+            font-size: 11px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
         }
 
+        .print-text {
+            display: none;
+        }
+
+        /* HIGH-ACCURACY PHYSICAL LAYOUT ENGINE */
         @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
 
             .btn,
             .history,
             select,
-            input[type="checkbox"] {
-                display: none;
+            .btn-danger,
+            th:last-child,
+            td:last-child {
+                display: none !important;
+            }
+
+            input,
+            textarea,
+            .editable-box,
+            td .editable-box {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin-bottom: 0 !important;
+                font-size: 14px !important;
+                color: #000 !important;
+                appearance: none;
+                -webkit-appearance: none;
+                white-space: pre-wrap !important;
+                /* Forces descriptions to break cleanly into new rows */
+                word-break: break-word !important;
+                /* Prevents single massive strings from spilling sideways */
+                overflow: visible !important;
+                /* Removes clipping bounds */
+                height: auto !important;
+                /* Enables cell block heights to scale with values */
+                display: block !important;
+                width: 100% !important;
+            }
+
+            td input {
+                display: block !important;
+                text-align: inherit !important;
+                width: 100% !important;
+            }
+
+            th {
+                background-color: #f2f2f2 !important;
+                color: #333 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .payment {
+                background: transparent !important;
+                page-break-inside: avoid;
+                margin-top: 15px;
+                padding: 10px;
+            }
+
+            @page {
+                size: auto;
+                margin: 0;
+                /* Hides raw browser URL links automatically */
+            }
+
+            body {
+                padding: 1.5cm !important;
+                /* Safely cushions content items from paper margins */
             }
         }
     </style>
+
+
 </head>
 
 <body>
 
     <div class="container">
 
-        <!-- HEADER -->
-        <div class="header">
-            <div class="brand">
-                <img src="logo.png" class="logo" alt="Lukim Mi Logo">
-                <div>
-                    <div class="brand-name">Lukim Mi Contractors & Traders</div>
-                    <div class="tagline">Cleaning & Building Maintenance</div>
+        <!-- MODERN CLEAN CORPORATE LETTERHEAD HEADER -->
+        <div class="letterhead-header">
+            <div class="brand-group">
+                <div class="brand-logo-box">
+                    <img src="logo.png" class="logo-house-graphic" alt="Lukim Mi Logo"
+                        onerror="this.style.display='none'">
+                </div>
+                <div class="brand-text-details">
+                    <div class="main-company-title"></div>
+                    <div class="main-company-subtitle"></div>
                 </div>
             </div>
-            <div>
+
+            <div class="meta-box meta-control-panel">
                 <select id="docType" onchange="changeType(this.value)">
                     <option value="Invoice">Invoice</option>
                     <option value="Quotation">Quotation</option>
                 </select>
-                <p><strong>No:</strong> <span id="docNo"></span></p>
-                <p><strong>Date:</strong> <input type="date" id="docDate"></p>
+                <div class="document-id-card">
+                    <p style="margin: 2px 0;"><strong>Document No:</strong> <input type="text" id="docNo"
+                            style="width: 100px; display: inline-block; margin-bottom: 0; padding: 4px; font-weight: bold;">
+                    </p>
+                    <p style="margin: 2px 0; display: flex; align-items: center; justify-content: flex-end; gap: 5px;">
+                        <strong>Date:</strong>
+                        <input type="date" id="docDate" style="width: 130px; margin-bottom: 0; padding: 4px;">
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -164,144 +410,248 @@
 
         <!-- COMPANY -->
         <h3>Company Details</h3>
-        <input id="companyAddress" placeholder="Address"
-            value="Port Moresby, National Capital District, Papua New Guinea">
-        <input id="companyContact" placeholder="Phone / Email" value="Proprietor: Belok Wosiyu">
+        <input id="companyAddress" value="Naurehara Street, Talai Settlement, Badili, Ward 2, NCD, Port Moresby"
+            readonly style="background: #fafafa; font-weight: bold; color: #555;">
+        <input id="companyContact" value="Proprietor: Belok Wosiyu | Ph: 73745735 | Email: wosiyub@gmail.com" readonly
+            style="background: #fafafa; font-weight: bold; color: #555;">
 
-        <!-- CLIENT -->
-        <h3>Client Details</h3>
-        <input id="clientName" placeholder="Client Name">
-        <input id="clientAddress" placeholder="Client Address / Site Location">
+        <!-- CLIENT & WORK SPECIFICATION SECTION -->
+        <div class="row">
+            <div class="col">
+                <h3>Client Details</h3>
+                <input id="clientName" placeholder="Client Name or Company">
+                <textarea id="clientAddress" placeholder="Client Billing Address / Site Project Location"></textarea>
+            </div>
+        </div>
 
-        <!-- ITEMS -->
-        <table>
+        <h3>Work & Material Specification</h3>
+        <table id="itemsTable">
             <thead>
                 <tr>
-                    <th>Description</th>
-                    <th>Qty</th>
-                    <th>Price (K)</th>
-                    <th>Total (K)</th>
+                    <th style="width: 50%;">Description of Maintenance Trades</th>
+                    <th style="width: 12%;">Qty</th>
+                    <th style="width: 18%;">Unit Price (K)</th>
+                    <th style="width: 15%;">Total (K)</th>
+                    <th style="width: 5%;">Action</th>
                 </tr>
             </thead>
-            <tbody id="items">
+            <tbody>
                 <tr>
-                    <td><input placeholder="Item description (e.g., Structural Carpentry, Materials)"></td>
-                    <td><input type="number" oninput="calculate()" placeholder="0"></td>
-                    <td><input type="number" oninput="calculate()" placeholder="0.00"></td>
-                    <td class="lineTotal">0.00</td>
+                    <td class="left-align">
+                        <input type="text" value="General building repairs and property maintenance"
+                            oninput="syncText(this)">
+                        <span class="print-text td-print-left">General building repairs and property maintenance</span>
+                    </td>
+                    <td><input type="number" class="qty-input" value="1" min="0" oninput="calculateRow(this)"></td>
+                    <td><input type="number" class="price-input" value="0.00" min="0" step="0.01"
+                            oninput="calculateRow(this)"></td>
+                    <td class="row-total">0.00</td>
+                    <td><button class="btn-danger" onclick="deleteRow(this)">X</button></td>
                 </tr>
             </tbody>
         </table>
 
-        <button class="btn btn-add" onclick="addRow()">+ Add Item</button>
+        <!-- ACTIONS BAR & TOTALS DISPLAY -->
+        <div class="actions-bar">
+            <button class="btn btn-add" onclick="addRow()">+ Add Line Item</button>
+            <button class="btn btn-save" onclick="saveDocument()">Save Draft</button>
+            <button class="btn btn-print" onclick="window.print()">Print / Save PDF</button>
+        </div>
 
-        <!-- TOTALS -->
         <div class="right">
             <p>Subtotal: K <span id="subtotal">0.00</span></p>
-            <p><input type="checkbox" id="gst" onchange="calculate()"> Include GST (10%)</p>
-            <p><strong>Grand Total: K <span id="grandTotal">0.00</span></strong></p>
+            <p>GST (0%): K <span id="gst">0.00</span></p>
+            <p class="summary-total">Total Amount: K <span id="grandTotal">0.00</span></p>
         </div>
 
-        <!-- PAYMENT DETAILS -->
+        <!-- REMITTANCE DETAILS -->
         <div class="payment">
-            <h3>Payment Details & Project Conditions</h3>
-            <p><strong>Bank:</strong> NBC (National Banking Corporation) / Kina Bank</p>
-            <p><strong>Account Name:</strong> Lukim Mi Contractors & Traders</p>
-            <p><strong>Account Number:</strong> [Insert Corporate Account Number]</p>
-            <p><strong>Account Type:</strong> Corporate Cheque Account</p>
-            <p><strong>Terms:</strong> 50% mobilization deposit required for material procurement. Balance strictly due
-                immediately upon completion and client sign-off.</p>
+            <h4>Commercial Remittance & Bank Settlement Details</h4>
+            <p>Electronic Funds Transfer (EFT) payments must be credited directly to the corporate account:</p>
+            <p><strong>Bank Name:</strong> National Banking Corporation Limited</p>
+            <p><strong>Account Name:</strong> LUKIM MI PROPERTY MAINTENANCE SERVICES</p>
+            <p><strong>Account Number:</strong> [Insert Account Number once finalized at Bank]</p>
+            <p style="margin-top: 5px; font-style: italic; color:#666;">Note: Please cite the Invoice or Quotation
+                Number listed above as your transaction payment description marker.</p>
         </div>
 
-        <!-- ACTIONS -->
-        <button class="btn btn-save" onclick="saveInvoice()">💾 Save Document</button>
-        <button class="btn btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
-
-        <!-- HISTORY -->
+        <!-- LOGGED HISTORY DRAFTS -->
         <div class="history">
-            <h3>📂 Document History</h3>
-            <select id="historyList"></select>
-            <button class="btn btn-load" onclick="loadInvoice()">Load Selected</button>
+            <h3>Saved Document Log</h3>
+            <table id="historyTable">
+                <thead>
+                    <tr>
+                        <th>Doc Type</th>
+                        <th>Doc No</th>
+                        <th>Client</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Injected via client JavaScript engine -->
+                </tbody>
+            </table>
         </div>
 
+        <!-- FOOTER LAYER -->
         <div class="footer">
-            Lukim Mi Contractors & Traders | Structural Quality & Operational Reliability | Papua New Guinea
+            Lukim Mi Property Maintenance Services &copy; 2026<br>
+            "Your Trusted Property Maintenance Partner – Serving Badili and NCD Provinces"<br>
+            <span style="font-size:9px; color:#aaa;">Generated via Lukim Mi Core ERP System V1.0</span>
         </div>
 
-    </div>
+    </div> <!-- Close .container wrapper cleanly -->
 
     <script>
+        document.getElementById('docDate').valueAsDate = new Date();
+
+        // ==========================================
+        // 1. PASTE THE AUTO-NUMBER GENERATOR HERE:
+        // ==========================================
+        function generateNextNumber(type) {
+            var history = JSON.parse(localStorage.getItem("lukim_mi_history")) || [];
+            var prefix = (type === "Invoice") ? "INV-" : "QT-";
+            var maxNum = 0;
+
+            history.forEach(function (item) {
+                if (item.type === type && item.number.indexOf(prefix) === 0) {
+                    var numPart = parseInt(item.number.replace(prefix, ""), 10);
+                    if (!isNaN(numPart) && numPart > maxNum) {
+                        maxNum = numPart;
+                    }
+                }
+            });
+
+            var nextNum = maxNum + 1;
+            var stringNum = nextNum.toString();
+            while (stringNum.length < 3) {
+                stringNum = "0" + stringNum;
+            }
+            return prefix + stringNum;
+        }
+
+        // ==========================================
+        // 2. REPLACE YOUR EXISTING changeType FUNCTION:
+        // ==========================================
+        function changeType(val) {
+            document.getElementById('docTitle').innerText = val;
+            document.title = "Lukim Mi Services - " + val;
+            document.getElementById("docNo").value = generateNextNumber(val); // <-- Added this line
+        }
+
+        function syncText(element) {
+            if (element.tagName === "TEXTAREA") {
+                document.getElementById("clientAddressPrint").innerText = element.value;
+            } else if (element.nextElementSibling) {
+                element.nextElementSibling.innerText = element.value;
+            }
+        }
+
         function addRow() {
-            document.getElementById("items").insertAdjacentHTML("beforeend", `
-    <tr>
-        <td><input placeholder="Item description"></td>
-        <td><input type="number" oninput="calculate()" placeholder="0"></td>
-        <td><input type="number" oninput="calculate()" placeholder="0.00"></td>
-        <td class="lineTotal">0.00</td>
-    </tr>`);
+            var tbody = document.getElementById("itemsTable").getElementsByTagName('tbody');
+            var row = tbody.insertRow();
+            row.innerHTML = `
+    <td class="left-align">
+      <input type="text" placeholder="Describe trades work..." oninput="syncText(this)">
+      <span class="print-text"></span>
+    </td>
+    <td><input type="number" class="qty-input" value="1" min="0" oninput="calculateRow(this)"></td>
+    <td><input type="number" class="price-input" value="0.00" min="0" step="0.01" oninput="calculateRow(this)"></td>
+    <td class="row-total">0.00</td>
+    <td><button class="btn-danger" onclick="deleteRow(this)">X</button></td>
+  `;
+            calculateGrandTotal();
         }
 
-        function calculate() {
-            let subtotal = 0;
-            document.querySelectorAll("#items tr").forEach(row => {
-                let qty = row.children[1].querySelector("input").value || 0;
-                let price = row.children[2].querySelector("input").value || 0;
-                let total = qty * price;
-                row.querySelector(".lineTotal").innerText = total.toFixed(2);
-                subtotal += total;
-            });
+        function deleteRow(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            calculateGrandTotal();
+        }
+
+        function calculateRow(input) {
+            var row = input.parentNode.parentNode;
+            var qty = parseFloat(row.querySelector('.qty-input').value) || 0;
+            var price = parseFloat(row.querySelector('.price-input').value) || 0;
+            var total = qty * price;
+            row.querySelector('.row-total').innerText = total.toFixed(2);
+            calculateGrandTotal();
+        }
+
+        function calculateGrandTotal() {
+            var rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            var subtotal = 0;
+            for (var i = 0; i < rows.length; i++) {
+                var totalCell = rows[i].querySelector('.row-total');
+                if (totalCell) {
+                    subtotal += parseFloat(totalCell.innerText) || 0;
+                }
+            }
             document.getElementById("subtotal").innerText = subtotal.toFixed(2);
-            let gst = document.getElementById("gst").checked ? subtotal * 0.10 : 0;
-            document.getElementById("grandTotal").innerText = (subtotal + gst).toFixed(2);
+            document.getElementById("grandTotal").innerText = subtotal.toFixed(2);
         }
 
-        function changeType(type) {
-            document.getElementById("docTitle").innerText = type;
-            generateNumber(type);
-        }
+        // ==========================================
+        // 3. REPLACE YOUR EXISTING saveDocument FUNCTION:
+        // ==========================================
+        function saveDocument() {
+            var docType = document.getElementById("docType").value;
+            var docNo = document.getElementById("docNo").value;
+            var clientName = document.getElementById("clientName").value || "Unknown Client";
+            var grandTotal = document.getElementById("grandTotal").innerText;
 
-        function generateNumber(type) {
-            let prefix = type === "Invoice" ? "INV" : "QT";
-            document.getElementById("docNo").innerText =
-                prefix + "-" + Math.floor(100000 + Math.random() * 900000);
-        }
+            var record = { type: docType, number: docNo, client: clientName, total: grandTotal };
+            var history = JSON.parse(localStorage.getItem("lukim_mi_history")) || [];
+            history = history.filter(item => item.number !== docNo);
+            history.push(record);
+            localStorage.setItem("lukim_mi_history", JSON.stringify(history));
 
-        function saveInvoice() {
-            let invoices = JSON.parse(localStorage.getItem("invoices") || "[]");
-            invoices.push({
-                no: document.getElementById("docNo").innerText,
-                type: document.getElementById("docType").value,
-                date: document.getElementById("docDate").value,
-                client: document.getElementById("clientName").value,
-                total: document.getElementById("grandTotal").innerText
-            });
-            localStorage.setItem("invoices", JSON.stringify(invoices));
+            alert("Document " + docNo + " saved safely.");
             loadHistory();
-            alert("Document saved successfully to history.");
+
+            // Ready the text block with the next serial sequence
+            document.getElementById("docNo").value = generateNextNumber(docType); // <-- Added this line
         }
 
         function loadHistory() {
-            let list = document.getElementById("historyList");
-            list.innerHTML = "";
-            let invoices = JSON.parse(localStorage.getItem("invoices") || "[]");
-            invoices.forEach((inv, i) => {
-                let opt = document.createElement("option");
-                opt.value = i;
-                opt.text = `${inv.no} | ${inv.client} | K${inv.total}`;
-                list.add(opt);
+            var history = JSON.parse(localStorage.getItem("lukim_mi_history")) || [];
+            var tbody = document.getElementById("historyTable").getElementsByTagName('tbody')[0];
+            tbody.innerHTML = "";
+            if (history.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="color:#aaa; font-style:italic;">No saved records located in storage.</td></tr>';
+                return;
+            }
+            history.forEach(function (item) {
+                var row = tbody.insertRow();
+                row.innerHTML = `
+      <td>${item.type}</td>
+      <td><strong>${item.number}</strong></td>
+      <td>${item.client}</td>
+      <td>K ${item.total}</td>
+      <td><button class="btn btn-load" style="padding:2px 8px; font-size:11px;" onclick="loadDocumentKey('${item.number}')">Open</button></td>
+    `;
             });
         }
 
-        function loadInvoice() {
-            let index = document.getElementById("historyList").value;
-            let invoices = JSON.parse(localStorage.getItem("invoices") || "[]");
-            let inv = invoices[index];
-            alert("Loaded Document Details:\n" + JSON.stringify(inv, null, 2));
+        function loadDocumentKey(key) {
+            var history = JSON.parse(localStorage.getItem("lukim_mi_history")) || [];
+            var item = history.find(i => i.number === key);
+            if (item) {
+                document.getElementById("docType").value = item.type;
+                document.getElementById('docTitle').innerText = item.type;
+                document.getElementById("docNo").value = item.number;
+                document.getElementById("clientName").value = item.client;
+            }
         }
 
-        document.getElementById("docDate").valueAsDate = new Date();
-        generateNumber("Invoice");
+        // ==========================================
+        // 4. REPLACE THE INITIAL RUNTIME RUN AT THE BOTTOM:
+        // ==========================================
+        calculateGrandTotal();
         loadHistory();
+        // Set the initial document number on page load
+        document.getElementById("docNo").value = generateNextNumber(document.getElementById("docType").value); // <-- Added this line
     </script>
 
 </body>
